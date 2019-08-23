@@ -10,19 +10,18 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-function displayResults(responseJson, maxResults) {
+function displayResults(responseJson) {
   //remove previous result
   clearResults();
   if (responseJson.total === '0') {
     $('#js-error-message').text('We didn\'t find anything for your request. Try something else');
   }
   // iterate through the articles array, stopping at the max number of results
-  for (let i = 0; i < responseJson.data.length & i<maxResults ; i++){
+  for (let i = 0; i < responseJson.data.length; i++){
     //add a list item to the results with the full name, description, and website url
     $('.results').append(
       `<li><a href="${responseJson.data[i].url}"><h3>${responseJson.data[i].fullName}</h3></a>
       <p>${responseJson.data[i].description}</p>
-      <p>${responseJson.data[i].addresses}</p>
       </li>`);
   }
 }
@@ -37,6 +36,7 @@ function getParks(query, maxResults=10, arr) {
   const params = {
     q: query,
     stateCode: arr,
+    limit: maxResults,
     api_key: apiKey
   };
   const queryString = formatQueryParams(params);
@@ -51,7 +51,7 @@ function getParks(query, maxResults=10, arr) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => displayResults(responseJson, maxResults))
+    .then(responseJson => displayResults(responseJson))
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
