@@ -2,6 +2,7 @@
 <html lang="en"> 
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Find a park near you</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +12,7 @@
         <form id='park-search'>
             <label for="input">Find a park</label>
             <input id="input" type="text">
-            <label for="max-results">Find a park</label>
+            <label for="max-results">Display</label>
             <input id="max-results" type="number" value="10">
             <button type="submit">Search</button>
             <select multiple name="state" size="5" required id="select-state">
@@ -68,12 +69,13 @@
                 <option value="WY">WY</option>
               </select>
         </form>
+        <p id="js-error-message" class="error-message"></p>
         <section class="results">
             <ul class="result"> 
 
             </ul>
         </section>
-        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script src="index.js"></script>
     </body>
 </html>

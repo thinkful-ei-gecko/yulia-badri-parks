@@ -5,15 +5,17 @@ const baseUrl = 'https://developer.nps.gov/api/v1/parks';
 
 //join params in to a sting
 function formatQueryParams(params) {
-  console.log(Object.keys(params));
   const queryItems = Object.keys(params)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
+    .map(key => `${encodeURI(key)}=${encodeURI(params[key])}`);
   return queryItems.join('&');
 }
 
 function displayResults(responseJson, maxResults) {
-//remove previous result
-  $('.results').empty();
+  //remove previous result
+  clearResults();
+  if (responseJson.total === '0') {
+    $('#js-error-message').text('We didn\'t find anything for your request. Try something else');
+  }
   // iterate through the articles array, stopping at the max number of results
   for (let i = 0; i < responseJson.data.length & i<maxResults ; i++){
     //add a list item to the results with the full name, description, and website url
@@ -25,24 +27,24 @@ function displayResults(responseJson, maxResults) {
   }
 }
 
+function clearResults(){
+  $('#js-error-message').empty();
+  $('.results').empty();
+}
+
 function getParks(query, maxResults=10, arr) {
  
   const params = {
-    stateCode: arr,
     q: query,
+    stateCode: arr,
+    api_key: apiKey
   };
-
   const queryString = formatQueryParams(params);
   //get url to fetch
   const url = baseUrl + '?' + queryString;
   console.log(url);
   
-  const options = {
-    headers: new Headers({
-      'X-Api-Key': apiKey})
-  };
-  
-  fetch(url, options)
+  fetch(url)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -53,7 +55,6 @@ function getParks(query, maxResults=10, arr) {
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
-    
 }
 
 
