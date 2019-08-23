@@ -41,7 +41,7 @@ function getParks(query, maxResults=10, arr) {
     headers: new Headers({
       'X-Api-Key': apiKey})
   };
-  /*
+  
   fetch(url, options)
     .then(response => {
       if (response.ok) {
@@ -53,7 +53,7 @@ function getParks(query, maxResults=10, arr) {
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
-    */
+    
 }
 
 
