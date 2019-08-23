@@ -5,6 +5,7 @@ const baseUrl = 'https://developer.nps.gov/api/v1/parks';
 
 //join params in to a sting
 function formatQueryParams(params) {
+  console.log(Object.keys(params));
   const queryItems = Object.keys(params)
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
   return queryItems.join('&');
@@ -27,9 +28,10 @@ function displayResults(responseJson, maxResults) {
 function getParks(query, maxResults=10, arr) {
  
   const params = {
-    q: query,
     stateCode: arr,
+    q: query,
   };
+
   const queryString = formatQueryParams(params);
   //get url to fetch
   const url = baseUrl + '?' + queryString;
@@ -39,6 +41,7 @@ function getParks(query, maxResults=10, arr) {
     headers: new Headers({
       'X-Api-Key': apiKey})
   };
+  /*
   fetch(url, options)
     .then(response => {
       if (response.ok) {
@@ -50,6 +53,7 @@ function getParks(query, maxResults=10, arr) {
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
+    */
 }
 
 
